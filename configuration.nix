@@ -38,8 +38,19 @@
   environment.systemPackages = with pkgs; [
     git
     vim
-    wget 
+    wget
+    deno
+    lambda-mod-zsh-theme
   ];
+
+  programs.zsh = {
+    enable = true;
+    ohMyZsh = {
+      enable = true;
+      theme = "agnoster";
+    };
+  };
+  users.defaultUserShell = pkgs.zsh;
 
   # VSCode server on NixOS-WSL requires using nix-ld-rs, instead of the regular nix-ld
   programs.nix-ld = {

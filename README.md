@@ -1,7 +1,12 @@
 # nixos
 My conf files for a reproducible NixOS linux environment
 
-# Quickstart
+```bash
+sudo nixos-rebuild switch --impure --flake github:forsureitsme/nixos#piter-chromebook
+```
+
+<!-- # Quickstart
+Reuse after migrating todo-wsl
 Setup configuration
 ```bash
 ssh-keygen -t rsa
@@ -29,4 +34,4 @@ cp /home/nixos/nixos ~/nixos
 cp /home/nixos/.ssh ~/.ssh
 
 sudo nixos-rebuild switch
-```
+``` -->

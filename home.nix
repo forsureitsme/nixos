@@ -25,8 +25,8 @@
   dconf.settings = {
     "org/gnome/desktop/background" = {
       picture-uri-dark = "file://${(pkgs.fetchurl {
-        url = "https://placehold.co/10/260154/jpg";
-        hash = "sha256-jMTatjuywmm53L1O3CNzkpMzdseNshjFtaFm5VWbcQ0=";
+        url = "https://static1.thegamerimages.com/wordpress/wp-content/uploads/2020/11/Dusa.jpg";
+        hash = "sha256-zXTwyuo0WL4FG1ovclvbEX2cP3oxoJxvk+HO52JJNIY=";
       })}";
     };
 

@@ -1,6 +1,4 @@
 { config, pkgs, params, ... }: {
-  # TODO: Install Synthwave X Fluormachine theme and patch vscode with it's css
-
   programs.home-manager.enable = true;
   home = rec {
     username = params.user;
@@ -9,14 +7,29 @@
     packages = with pkgs; [
       brave
       vscode.fhs
-      nixpkgs-fmt
-      nixd
-      gnome-tweaks
+      # gnome-tweaks
       nautilus
+      deno
+      lazygit
+
+      # neovim plugin dependencies
+      wl-clipboard
+      gcc 
+      tree-sitter
+      cargo
+      unzip
+      wget
     ];
   };
 
   dconf.settings = {
+    "org/gnome/desktop/background" = {
+      picture-uri-dark = "file://${(pkgs.fetchurl {
+        url = "https://placehold.co/10/260154/jpg";
+        hash = "sha256-jMTatjuywmm53L1O3CNzkpMzdseNshjFtaFm5VWbcQ0=";
+      })}";
+    };
+
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
       enable-hot-corners = false;
@@ -28,8 +41,8 @@
     };
 
     "org/freedesktop/tracker/miner/files" = {
-      index-single-directories = [];
-      index-recursive-directories = [];
+      index-single-directories = [ ];
+      index-recursive-directories = [ ];
     };
 
     "org/gnome/desktop/privacy" = {
@@ -50,17 +63,37 @@
       sleep-inactive-ac-type = "nothing";
       sleep-inactive-battery-type = "nothing";
     };
+
+    "org/gnome/shell/extensions/blur-my-shell" = {
+      hacks-level = 0;
+    };
+
   };
 
   programs = {
+    gnome-shell = {
+      enable = true;
+
+      extensions = with pkgs.gnomeExtensions; [
+        { package = useless-gaps; }
+        { package = blur-my-shell; }
+      ];
+    };
+
+
     git = {
       enable = true;
       userName = "Pedro Cardoso da Silva (@forsureitsme)";
       userEmail = "forsureitsme@gmail.com";
     };
 
-    alacritty = {
+    wezterm = {
       enable = true;
+      extraConfig = ''
+       return {
+         front_end = "WebGpu"
+       }
+      '';
     };
 
     zsh = {
@@ -77,5 +110,12 @@
         ];
       };
     };
+
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+      extraLuaConfig = builtins.readFile (toString ./neovim.lua);
+    };
+
   };
 }

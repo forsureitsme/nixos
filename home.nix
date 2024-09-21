@@ -14,11 +14,6 @@
 
       # neovim plugin dependencies
       wl-clipboard
-      gcc 
-      tree-sitter
-      cargo
-      unzip
-      wget
     ];
   };
 
@@ -75,8 +70,8 @@
       enable = true;
 
       extensions = with pkgs.gnomeExtensions; [
-        { package = useless-gaps; }
         { package = blur-my-shell; }
+        { package = forge; }
       ];
     };
 
@@ -114,7 +109,6 @@
     neovim = {
       enable = true;
       defaultEditor = true;
-      extraLuaConfig = builtins.readFile (toString ./neovim.lua);
     };
 
   };

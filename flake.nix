@@ -19,7 +19,6 @@
       system = "x86_64-linux";
       specialArgs = { inherit params; };
       modules = [
-        # TODO: Migrate configuration.nix
         ./configuration.nix
 
         home-manager.nixosModules.home-manager

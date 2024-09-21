@@ -1,4 +1,15 @@
-{ config, pkgs, params, ... }: {
+{ config, pkgs, params, ... }:
+# Until PR 313760 on nixpkgs is merged
+let
+  bunBaseline = pkgs.bun.overrideAttrs rec {
+    passthru.sources."x86_64-linux" = pkgs.fetchurl {
+      url = "https://github.com/oven-sh/bun/releases/download/bun-v1.1.27/bun-linux-x64-baseline.zip";
+      hash = "sha256-FwkVP5lb2V9E8YGPkTAqVMsZmaZXMq8x5AR+99cuIX0=";
+    };
+    src = passthru.sources."x86_64-linux";
+  };
+in
+{
   programs.home-manager.enable = true;
   home = rec {
     username = params.user;
@@ -6,14 +17,15 @@
     stateVersion = "24.05";
     packages = with pkgs; [
       brave
-      vscode.fhs
       # gnome-tweaks
       nautilus
-      deno
       lazygit
-
-      # neovim plugin dependencies
       wl-clipboard
+
+      vscode.fhs
+      nixpkgs-fmt
+    ] ++ [
+      bunBaseline
     ];
   };
 
@@ -85,9 +97,9 @@
     wezterm = {
       enable = true;
       extraConfig = ''
-       return {
-         front_end = "WebGpu"
-       }
+        return {
+          front_end = "WebGpu"
+        }
       '';
     };
 

@@ -37,26 +37,54 @@
   };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  services.xserver = {
+    enable = true;
 
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+    # Enable the GNOME Desktop Environment.
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
+
+    # Remove xterm from bloated GNOME install
+    excludePackages = [ pkgs.xterm ];
+    desktopManager.xterm.enable = false;
+
+    # Enable Intel graphic drives
+    videoDrivers = [ "modesetting" ];
+
+    # Configure keymap in X11
+    xkb = {
+      layout = "br";
+    };
+  };
+
+  # Keycombos for keyboards with missing keys
+  services.keyd = {
+    enable = true;
+    keyboards = {
+      default = {
+        ids = [ "*" ];
+        settings = {
+          shift = {
+            backspace = "delete";
+          };
+        };
+      };
+    };
+  };
+
+
+  # Enable Intel GPU Acceleration
+  hardware.opengl.extraPackages = with pkgs; [
+    intel-compute-runtime
+    intel-media-driver
+  ];
 
   # Remove gnome bloat
   services.gnome.core-utilities.enable = false;
   environment.gnome.excludePackages = with pkgs; [
     gnome-tour
   ];
-  services.xserver.excludePackages = [ pkgs.xterm ]; 
-  services.xserver.desktopManager.xterm.enable = false;
   documentation.nixos.enable = false;
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "br";
-    # variant = "nodeadkeys";
-  };
 
   # Configure console keymap
   console.keyMap = "br-abnt2";

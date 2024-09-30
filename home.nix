@@ -22,7 +22,7 @@ in
       lazygit
       wl-clipboard
 
-      vscode.fhs
+      vscodium-fhs
       nixpkgs-fmt
     ] ++ [
       bunBaseline

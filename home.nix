@@ -24,6 +24,7 @@ in
 
       vscodium-fhs
       nixpkgs-fmt
+      tilda
     ] ++ [
       bunBaseline
     ];
@@ -92,15 +93,6 @@ in
       enable = true;
       userName = "Pedro Cardoso da Silva (@forsureitsme)";
       userEmail = "forsureitsme@gmail.com";
-    };
-
-    wezterm = {
-      enable = true;
-      extraConfig = ''
-        return {
-          front_end = "WebGpu"
-        }
-      '';
     };
 
     zsh = {

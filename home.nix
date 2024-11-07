@@ -1,12 +1,20 @@
-{ config, pkgs, params, ... }:
-# Until PR 313760 on nixpkgs is merged
+{ config, pkgs, params, lib, ... }:
 let
+  # Until PR 313760 on nixpkgs is merged
   bunBaseline = pkgs.bun.overrideAttrs rec {
     passthru.sources."x86_64-linux" = pkgs.fetchurl {
       url = "https://github.com/oven-sh/bun/releases/download/bun-v1.1.27/bun-linux-x64-baseline.zip";
       hash = "sha256-FwkVP5lb2V9E8YGPkTAqVMsZmaZXMq8x5AR+99cuIX0=";
     };
     src = passthru.sources."x86_64-linux";
+  };
+  vimPluginFromGithub = ref: repo: pkgs.vimUtils.buildVimPlugin {
+    pname = "${lib.strings.sanitizeDerivationName repo}";
+    version = ref;
+    src = builtins.fetchGit {
+      url = "https://github.com/${repo}.git";
+      ref = ref;
+    };
   };
 in
 {
@@ -20,7 +28,7 @@ in
       nautilus
       wl-clipboard
 
-      tilda
+      gnome.gnome-terminal
       lazygit
 
       # gnome-tweaks
@@ -105,7 +113,6 @@ in
         plugins = [
           "git"
           "sudo"
-          "vscode"
         ];
       };
     };
@@ -113,7 +120,14 @@ in
     neovim = {
       enable = true;
       defaultEditor = true;
+      plugins = with pkgs.vimPlugins; [
+        vim-nix
+        telescope-nvim
+        plenary-nvim # Required by telescope
+        
+        (vimPluginFromGithub "HEAD" "maxmx03/fluoromachine.nvim")
+      ];
+      extraLuaConfig = (builtins.readFile ./neovim.lua);
     };
-
   };
 }

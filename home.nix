@@ -17,14 +17,14 @@ in
     stateVersion = "24.05";
     packages = with pkgs; [
       brave
-      # gnome-tweaks
       nautilus
-      lazygit
       wl-clipboard
 
-      vscodium-fhs
-      nixpkgs-fmt
       tilda
+      lazygit
+
+      # gnome-tweaks
+      # nixpkgs-fmt
     ] ++ [
       bunBaseline
     ];

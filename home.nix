@@ -17,7 +17,7 @@ let
     };
   };
 in
-{
+rec {
   programs.home-manager.enable = true;
   home = rec {
     username = params.user;
@@ -28,21 +28,31 @@ in
       nautilus
       wl-clipboard
 
-      gnome.gnome-terminal
+      gnome-terminal
       lazygit
 
+      lunarvim
       # gnome-tweaks
-      # nixpkgs-fmt
+
+      (nerdfonts.override { fonts = ["Ubuntu" "UbuntuMono"]; })
     ] ++ [
       bunBaseline
     ];
   };
 
+  fonts.fontconfig = {
+    enable = true;
+  };
+
+  systemd.user.tmpfiles.rules = [
+    "L+ ${home.homeDirectory}/.config/lvim/ - - - - ${home.homeDirectory}/nixos/dotfiles/.config/lvim/"
+  ];
+
   dconf.settings = {
     "org/gnome/desktop/background" = {
       picture-uri-dark = "file://${(pkgs.fetchurl {
-        url = "https://static1.thegamerimages.com/wordpress/wp-content/uploads/2020/11/Dusa.jpg";
-        hash = "sha256-zXTwyuo0WL4FG1ovclvbEX2cP3oxoJxvk+HO52JJNIY=";
+        url = "https://pm1.aminoapps.com/6612/3a75e0d96b11a5083c1b4a87fc795f04f7b036b7_hq.jpg";
+        hash = "sha256-s1+li8Hyp8zfO2GArgCyYgkwV96LfmH7Tzn0Y/iIMFM=";
       })}";
     };
 
@@ -50,6 +60,10 @@ in
       color-scheme = "prefer-dark";
       enable-hot-corners = false;
       show-battery-percentage = true;
+    
+      font-name = "Ubuntu Nerd Font 11";
+      monospace-font-name = "UbuntuMono Nerd Font 10";
+      document-font-name = "Ubuntu Nerd Font 10";
     };
 
     "org/gnome/desktop/search-providers" = {
@@ -83,7 +97,6 @@ in
     "org/gnome/shell/extensions/blur-my-shell" = {
       hacks-level = 0;
     };
-
   };
 
   programs = {
@@ -115,19 +128,6 @@ in
           "sudo"
         ];
       };
-    };
-
-    neovim = {
-      enable = true;
-      defaultEditor = true;
-      plugins = with pkgs.vimPlugins; [
-        vim-nix
-        telescope-nvim
-        plenary-nvim # Required by telescope
-        
-        (vimPluginFromGithub "HEAD" "maxmx03/fluoromachine.nvim")
-      ];
-      extraLuaConfig = (builtins.readFile ./neovim.lua);
     };
   };
 }

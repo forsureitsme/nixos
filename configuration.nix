@@ -40,11 +40,14 @@
   services.xserver = {
     enable = true;
 
-    # Enable the GNOME Desktop Environment.
-    displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
+    # TODO: Autologin
+    displayManager.lightdm = {
+      enable = true;
+      greeter.enable = true;
+    };
+    desktopManager.xfce.enable = true;
 
-    # Remove xterm from bloated GNOME install
+    # Remove xterm from bloated desktop manager install
     excludePackages = [ pkgs.xterm ];
     desktopManager.xterm.enable = false;
 
@@ -57,6 +60,11 @@
     };
   };
 
+  documentation.nixos.enable = false;
+  environment.xfce.excludePackages = with pkgs; [
+    xfce.xfdesktop
+  ];
+
   # Keycombos for keyboards with missing keys
   services.keyd = {
     enable = true;
@@ -67,24 +75,19 @@
           shift = {
             backspace = "delete";
           };
+
+          # TODO: Shift + Power Off = Insert
+          # ? = PgUp PgDown
         };
       };
     };
   };
-
 
   # Enable Intel GPU Acceleration
   hardware.graphics.extraPackages = with pkgs; [
     intel-compute-runtime
     intel-media-driver
   ];
-
-  # Remove gnome bloat
-  services.gnome.core-utilities.enable = false;
-  environment.gnome.excludePackages = with pkgs; [
-    gnome-tour
-  ];
-  documentation.nixos.enable = false;
 
   # Configure console keymap
   console.keyMap = "br-abnt2";
@@ -114,17 +117,15 @@
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = params.user;
 
-  # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
-  systemd.services."getty@tty1".enable = false;
-  systemd.services."autovt@tty1".enable = false;
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
-    neovim
+    lunarvim
     git
+
+    (nerdfonts.override { fonts = ["Ubuntu" "UbuntuMono"]; })
   ];
 
   services.kmscon = {
@@ -132,7 +133,10 @@
     hwRender = true;
     useXkbConfig = true;
   };
-  programs.zsh.enable = true;
+  programs = {
+    zsh.enable = true;
+    
+  };
 
   system.stateVersion = "unstable";
 }

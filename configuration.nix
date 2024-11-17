@@ -64,9 +64,10 @@
   environment.xfce.excludePackages = with pkgs.xfce; [
     xfdesktop
     mousepad
+    parole
+    ristretto
   ];
 
-  # Keycombos for keyboards with missing keys
   services.keyd = {
     enable = true;
     keyboards = {
@@ -74,6 +75,7 @@
         ids = [ "*" ];
         settings = {
           shift = {
+            # Missing keys
             backspace = "delete";
             power = "S-insert";
           };

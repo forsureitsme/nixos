@@ -4,7 +4,6 @@
   <property name="configver" type="int" value="2"/>
   <property name="panels" type="array">
     <value type="int" value="1"/>
-    <value type="int" value="2"/>
     <property name="dark-mode" type="bool" value="true"/>
     <property name="panel-1" type="empty">
       <property name="position" type="string" value="p=6;x=0;y=0"/>
@@ -27,20 +26,13 @@
         <value type="int" value="14"/>
       </property>
     </property>
-    <property name="panel-2" type="empty">
-      <property name="autohide-behavior" type="uint" value="1"/>
-      <property name="position" type="string" value="p=10;x=0;y=0"/>
-      <property name="length" type="uint" value="1"/>
-      <property name="position-locked" type="bool" value="true"/>
-      <property name="size" type="uint" value="48"/>
-      <property name="plugin-ids" type="array">
-        <value type="int" value="7"/>
-      </property>
-    </property>
   </property>
   <property name="plugins" type="empty">
     <property name="plugin-2" type="string" value="tasklist">
       <property name="grouping" type="uint" value="1"/>
+      <property name="flat-buttons" type="bool" value="true"/>
+      <property name="show-handle" type="bool" value="false"/>
+      <property name="show-labels" type="bool" value="false"/>
     </property>
     <property name="plugin-3" type="string" value="separator">
       <property name="expand" type="bool" value="true"/>
@@ -53,6 +45,9 @@
     <property name="plugin-6" type="string" value="systray">
       <property name="square-icons" type="bool" value="true"/>
       <property name="known-legacy-items" type="array">
+        <value type="string" value="wi-fi network connection “pedro_5g” active: pedro_5g (70%)"/>
+        <value type="string" value="wi-fi network connection “pedro_5g” active: pedro_5g (76%)"/>
+        <value type="string" value="requesting a wi-fi network address for “pedro_5g”…"/>
         <value type="string" value="wi-fi network connection “pedro_5g” active: pedro_5g (73%)"/>
         <value type="string" value="wi-fi network connection “pedro_5g” active: pedro_5g (80%)"/>
       </property>
@@ -60,6 +55,7 @@
     <property name="plugin-8" type="string" value="pulseaudio">
       <property name="enable-keyboard-shortcuts" type="bool" value="true"/>
       <property name="show-notifications" type="bool" value="true"/>
+      <property name="known-players" type="string" value="Brave"/>
     </property>
     <property name="plugin-9" type="string" value="power-manager-plugin"/>
     <property name="plugin-10" type="string" value="notification-plugin"/>
@@ -88,16 +84,6 @@
         <value type="string" value="+shutdown"/>
         <value type="string" value="-logout-dialog"/>
       </property>
-    </property>
-    <property name="plugin-7" type="string" value="tasklist">
-      <property name="show-labels" type="bool" value="false"/>
-      <property name="flat-buttons" type="bool" value="false"/>
-      <property name="show-handle" type="bool" value="false"/>
-      <property name="show-tooltips" type="bool" value="true"/>
-      <property name="grouping" type="bool" value="false"/>
-      <property name="show-wireframes" type="bool" value="false"/>
-      <property name="include-all-workspaces" type="bool" value="true"/>
-      <property name="show-only-minimized" type="bool" value="false"/>
     </property>
   </property>
 </channel>

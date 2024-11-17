@@ -1,4 +1,4 @@
-{ config, pkgs, params, lib, ... }:
+{ pkgs, params, ... }:
 let
   # Until PR 313760 on nixpkgs is merged
   bunBaseline = pkgs.bun.overrideAttrs rec {
@@ -7,14 +7,6 @@ let
       hash = "sha256-FwkVP5lb2V9E8YGPkTAqVMsZmaZXMq8x5AR+99cuIX0=";
     };
     src = passthru.sources."x86_64-linux";
-  };
-  vimPluginFromGithub = ref: repo: pkgs.vimUtils.buildVimPlugin {
-    pname = "${lib.strings.sanitizeDerivationName repo}";
-    version = ref;
-    src = builtins.fetchGit {
-      url = "https://github.com/${repo}.git";
-      ref = ref;
-    };
   };
 in
 rec {
@@ -26,21 +18,26 @@ rec {
     packages = with pkgs; [
       brave
       lazygit
-
     ] ++ [
       bunBaseline
     ];
   };
 
-  fonts.fontconfig = {
-    enable = true;
-  };
-
+  # Symlink configs
   systemd.user.tmpfiles.rules = [
     "L+ ${home.homeDirectory}/.config/lvim/ - - - - ${home.homeDirectory}/nixos/dotfiles/.config/lvim/"
     "L+ ${home.homeDirectory}/.config/xfce4/ - - - - ${home.homeDirectory}/nixos/dotfiles/.config/xfce4/"
   ];
 
+  # Start windows maximized
+  services.devilspie2 = {
+    enable = true;
+    config = ''
+      maximize()
+    '';
+  };
+
+  # TODO: Check if every settings was migrated to xfce
   # dconf.settings = {
   #   "org/gnome/desktop/background" = {
   #     picture-uri-dark = "file://${(pkgs.fetchurl {
@@ -93,15 +90,6 @@ rec {
   # };
 
   programs = {
-    # gnome-shell = {
-    #   enable = true;
-
-    #   extensions = with pkgs.gnomeExtensions; [
-    #     { package = blur-my-shell; }
-    #     { package = forge; }
-    #   ];
-    # };
-
     git = {
       enable = true;
       userName = "Pedro Cardoso da Silva (@forsureitsme)";

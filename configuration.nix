@@ -40,7 +40,6 @@
   services.xserver = {
     enable = true;
 
-    # TODO: Autologin
     displayManager.lightdm = {
       enable = true;
       greeter.enable = true;
@@ -60,9 +59,11 @@
     };
   };
 
+  # Remove bloat
   documentation.nixos.enable = false;
-  environment.xfce.excludePackages = with pkgs; [
-    xfce.xfdesktop
+  environment.xfce.excludePackages = with pkgs.xfce; [
+    xfdesktop
+    mousepad
   ];
 
   # Keycombos for keyboards with missing keys
@@ -74,9 +75,8 @@
         settings = {
           shift = {
             backspace = "delete";
+            power = "S-insert";
           };
-
-          # TODO: Shift + Power Off = Insert
           # ? = PgUp PgDown
         };
       };
@@ -114,8 +114,10 @@
   };
 
   # Enable automatic login for the user.
-  services.displayManager.autoLogin.enable = true;
-  services.displayManager.autoLogin.user = params.user;
+  services.displayManager.autoLogin = {
+    enable = true;
+    user = params.user;
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -124,15 +126,26 @@
   environment.systemPackages = with pkgs; [
     lunarvim
     git
-
-    (nerdfonts.override { fonts = ["Ubuntu" "UbuntuMono"]; })
   ];
 
+  # Fonts
+  fonts = {
+    packages = with pkgs; [
+      (nerdfonts.override { fonts = ["Ubuntu" "UbuntuMono"]; })
+    ];
+    fontDir = {
+      enable = true;
+    };
+  };
+
+  # Unlame tty console
   services.kmscon = {
     enable = true;
     hwRender = true;
     useXkbConfig = true;
   };
+
+  # Unlame terminals
   programs = {
     zsh.enable = true;
     

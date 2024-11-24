@@ -24,11 +24,17 @@ with config; {
     ] ++ [
       bunBaseline
     ];
+
+    shellAliases = {
+      node = "bun";
+      npm = "bun";
+      npx = "bunx --bun";
+    };
   };
 
   # Symlink configs
   systemd.user.tmpfiles.rules = [
-    "L+ ${home.homeDirectory}/.config/lvim/ - - - - ${home.homeDirectory}/nixos/dotfiles/.config/lvim/"
+    "L+ ${home.homeDirectory}/.config/nvim/ - - - - ${home.homeDirectory}/nixos/dotfiles/.config/nvim/"
   ];
 
   programs = {
@@ -36,6 +42,21 @@ with config; {
       enable = true;
       userName = "Pedro Cardoso da Silva (@forsureitsme)";
       userEmail = "forsureitsme@gmail.com";
+    };
+
+    neovim = {
+      enable = true;
+
+      extraPackages = with pkgs; [
+        zig
+        ripgrep
+        fd
+        unzip
+        wget
+        python3
+        nodejs
+        cargo
+      ];
     };
 
     zsh = {

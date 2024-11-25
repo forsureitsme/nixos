@@ -21,15 +21,10 @@ with config; {
     stateVersion = "24.05";
     packages = with pkgs; [
       lazygit
+      nodejs
     ] ++ [
       bunBaseline
     ];
-
-    shellAliases = {
-      node = "bun";
-      npm = "bun";
-      npx = "bunx --bun";
-    };
   };
 
   # Symlink configs
@@ -54,7 +49,6 @@ with config; {
         unzip
         wget
         python3
-        nodejs
         cargo
       ];
     };

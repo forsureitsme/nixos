@@ -21,7 +21,17 @@ with config; {
     stateVersion = "24.05";
     packages = with pkgs; [
       lazygit
+
+      # Extra packages for neovim
       nodejs
+      gcc
+      ripgrep
+      fd
+      unzip
+      wget
+      python3
+      cargo
+      gnumake
     ] ++ [
       bunBaseline
     ];
@@ -41,16 +51,6 @@ with config; {
 
     neovim = {
       enable = true;
-
-      extraPackages = with pkgs; [
-        zig
-        ripgrep
-        fd
-        unzip
-        wget
-        python3
-        cargo
-      ];
     };
 
     zsh = {

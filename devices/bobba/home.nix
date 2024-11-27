@@ -25,7 +25,8 @@ in {
 
   home.packages = with pkgs; [
     brave
-    xclip # Clipboard support for lvim
+
+    xclip # Clipboard support for nvim
   ] ++ [
     warpWithoutLogin
   ];

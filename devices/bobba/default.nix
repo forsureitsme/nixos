@@ -83,6 +83,12 @@
     pulse.enable = true;
   };
 
+  # Enable bluetooth management
+  hardware.bluetooth = {
+    enable = true;
+  };
+  services.blueman.enable = true;
+
   # Unlame tty console
   services.kmscon = {
     enable = true;

@@ -1,12 +1,12 @@
-app=none
-custom_action_command=none
+app=/nix/store/7q1gfq6gz700lysffpxb22s0jd0ghv2r-brave-1.69.162/bin/brave
+custom_action_command=/nix/store/bac1bqmqxkcbvhyiz6q5yi01f55vsg06-xfce4-screenshooter-1.11.1/libexec/xfce4/screenshooter/scripts/imgur-upload.sh %f %imgur_client_id
 last_user=
 last_extension=png
 show_in_folder=false
-screenshot_dir=file:///home/piter/Pictures
+screenshot_dir=file:/home/piter/Downloads
 action=1
 delay=0
-region=1
+region=3
 show_mouse=1
 show_border=1
 

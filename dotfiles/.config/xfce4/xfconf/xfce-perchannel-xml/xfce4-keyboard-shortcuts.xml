@@ -38,6 +38,11 @@
       <property name="&lt;Super&gt;l" type="string" value="xflock4"/>
       <property name="&lt;Super&gt;t" type="string" value="exo-open --launch TerminalEmulator"/>
       <property name="&lt;Super&gt;F5" type="string" value="xfce4-display-settings --minimal"/>
+      <property name="&lt;Super&gt;F6" type="string" value="brightnessctl set +10%-"/>
+      <property name="&lt;Super&gt;F7" type="string" value="brightnessctl set +10%"/>
+      <property name="&lt;Super&gt;F8" type="string" value="pactl set-sink-mute @DEFAULT_SINK@ toggle"/>
+      <property name="&lt;Super&gt;F9" type="string" value="pactl set-sink-volume @DEFAULT_SINK@ -10%"/>
+      <property name="&lt;Super&gt;F10" type="string" value="pactl set-sink-volume @DEFAULT_SINK@ +10%"/>
       <property name="&lt;Super&gt;space" type="string" value="xfce4-appfinder">
         <property name="startup-notify" type="bool" value="true"/>
       </property>

@@ -27,6 +27,9 @@ in {
     brave
 
     xclip # Clipboard support for nvim
+    # Function Keys
+    pulseaudio
+    brightnessctl 
   ] ++ [
     warpWithoutLogin
   ];

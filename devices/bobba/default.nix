@@ -1,4 +1,4 @@
-{ pkgs, params, ... }:
+{ nixpkgs, pkgs, params, ... }:
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -10,10 +10,18 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Enable Intel GPU Acceleration
-  hardware.graphics.extraPackages = with pkgs; [
-    intel-compute-runtime
-    intel-media-driver
-  ];
+  nixpkgs.config.packageOverrides = pkgs: {
+    intel-vaapi-driver = pkgs.intel-vaapi-driver.override { enableHybridCodec = true; };
+  };
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-compute-runtime
+      intel-media-driver
+      intel-vaapi-driver
+      libvdpau-va-gl
+    ];
+  };
 
   # Enable the X11 windowing system.
   services.xserver = {

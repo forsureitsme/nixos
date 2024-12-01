@@ -23,6 +23,7 @@ in {
     "L+ ${home.homeDirectory}/${path} - - - - ${home.homeDirectory}/nixos/dotfiles/${path}"
   ) [
     ".config/xfce4/"
+    ".config/warp-terminal/"
     ".local/share/warp-terminal/"
   ]);
 

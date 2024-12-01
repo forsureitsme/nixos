@@ -19,9 +19,12 @@ in {
   };
 
   # Symlink configs
-  systemd.user.tmpfiles.rules = [
-    "L+ ${home.homeDirectory}/.config/xfce4/ - - - - ${home.homeDirectory}/nixos/dotfiles/.config/xfce4/"
-  ];
+  systemd.user.tmpfiles.rules = (map (path:
+    "L+ ${home.homeDirectory}/${path} - - - - ${home.homeDirectory}/nixos/dotfiles/${path}"
+  ) [
+    ".config/xfce4/"
+    ".local/share/warp-terminal/"
+  ]);
 
   home.packages = with pkgs; [
     brave

@@ -72,6 +72,9 @@
             backspace = "delete";
             power = "S-insert";
           };
+          main = {
+            capslock = "layer(meta)";
+          };
           # ? = PgUp PgDown
         };
       };

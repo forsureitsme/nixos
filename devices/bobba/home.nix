@@ -4,17 +4,7 @@
   config,
   ...
 }:
-with config; let
-  # Until v0.2024.11.19.08.02 goes to nixpkgs
-  warpWithoutLogin = pkgs.warp-terminal.overrideAttrs rec {
-    pname = "warp-terminal";
-    version = "0.2024.11.19.08.02.stable_01";
-    src = pkgs.fetchurl {
-      url = "https://releases.warp.dev/stable/v${version}/warp-terminal-v${version}-1-x86_64.pkg.tar.zst";
-      sha256 = "sha256-4uYVA+6NI11X/rYwEzHeTiPnDyntpZcBBBCiZkc9ik8=";
-    };
-  };
-in {
+with config; {
   # Start windows maximized
   services.devilspie2 = {
     enable = true;
@@ -33,20 +23,17 @@ in {
       ".local/share/warp-terminal/"
     ];
 
-  home.packages = with pkgs;
-    [
-      brave
+  home.packages = with pkgs; [
+    brave
+    warp-terminal
 
-      # Clipboard support for nvim
-      xclip
+    # Clipboard support for nvim
+    xclip
 
-      # Enable pseudo media function keys
-      pulseaudio
-      brightnessctl
-    ]
-    ++ [
-      warpWithoutLogin
-    ];
+    # Enable pseudo media function keys
+    pulseaudio
+    brightnessctl
+  ];
 
   # TODO: Check if every settings was migrated to xfce
   # dconf.settings = {

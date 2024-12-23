@@ -1,17 +1,27 @@
-{ nixpkgs, pkgs, params, ... }:
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      /etc/nixos/hardware-configuration.nix
-    ];
+  nixpkgs,
+  pkgs,
+  params,
+  ...
+}: {
+  imports = [
+    # Include the results of the hardware scan.
+    /etc/nixos/hardware-configuration.nix
+  ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    systemd-boot = {
+      enable = true;
+      configurationLimit = 3;
+    };
+    timeout = 1;
+    efi.canTouchEfiVariables = true;
+  };
 
   # Enable Intel GPU Acceleration
   nixpkgs.config.packageOverrides = pkgs: {
-    intel-vaapi-driver = pkgs.intel-vaapi-driver.override { enableHybridCodec = true; };
+    intel-vaapi-driver = pkgs.intel-vaapi-driver.override {enableHybridCodec = true;};
   };
   hardware.graphics = {
     enable = true;
@@ -27,18 +37,14 @@
   services.xserver = {
     enable = true;
 
-    displayManager.lightdm = {
-      enable = true;
-      greeter.enable = true;
-    };
     desktopManager.xfce.enable = true;
 
     # Remove xterm from bloated desktop manager install
-    excludePackages = [ pkgs.xterm ];
+    excludePackages = [pkgs.xterm];
     desktopManager.xterm.enable = false;
 
     # Enable Intel graphic drives
-    videoDrivers = [ "modesetting" ];
+    videoDrivers = ["modesetting"];
 
     # Configure keymap in X11
     xkb = {
@@ -46,6 +52,13 @@
     };
   };
 
+  services.displayManager.ly = {
+    enable = true;
+    settings = {
+      animation = "matrix";
+      hide_borders = true;
+    };
+  };
   # Remove bloat
   environment.xfce.excludePackages = with pkgs.xfce; [
     xfdesktop
@@ -55,17 +68,17 @@
   ];
 
   # Enable automatic login for the user.
-  services.displayManager.autoLogin = {
-    enable = true;
-    user = params.user;
-  };
+  # services.displayManager.autoLogin = {
+  #   enable = true;
+  #   user = params.user;
+  # };
 
   # Map keys
   services.keyd = {
     enable = true;
     keyboards = {
       default = {
-        ids = [ "*" ];
+        ids = ["*"];
         settings = {
           shift = {
             # Missing keys
@@ -110,7 +123,7 @@
   # Fonts
   fonts = {
     packages = with pkgs; [
-      (nerdfonts.override { fonts = ["Ubuntu" "UbuntuMono"]; })
+      (nerdfonts.override {fonts = ["Ubuntu" "UbuntuMono"];})
     ];
     fontDir = {
       enable = true;

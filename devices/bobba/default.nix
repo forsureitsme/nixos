@@ -81,12 +81,38 @@
         ids = ["*"];
         settings = {
           shift = {
-            # Missing keys
             backspace = "delete";
             power = "S-insert";
           };
           main = {
             capslock = "layer(meta)";
+            back = "f1";
+            forward = "f2";
+            refresh = "f3";
+            zoom = "f4";
+            scale = "f5";
+            brightnessdown = "f6";
+            brightnessup = "f7";
+            mute = "f8";
+            volumedown = "f9";
+            volumeup = "f10";
+            power = "f11";
+          };
+          meta = {
+            up = "pgup";
+            down = "pgdown";
+            left = "home";
+            right = "end";
+            f1 = "back";
+            f2 = "forward";
+            f3 = "refresh ";
+            f4 = "zoom";
+            f5 = "scale";
+            f6 = "brightnessdown ";
+            f7 = "brightnessup ";
+            f8 = "mute ";
+            f9 = "volumedown ";
+            f10 = "volumeup";
           };
           # ? = PgUp PgDown
         };
